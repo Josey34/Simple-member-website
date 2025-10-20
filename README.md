@@ -1,73 +1,95 @@
-# React + TypeScript + Vite
+# Billiards Club Member Portal
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern web application for billiards club members to track points, view rewards, and manage their membership benefits.
 
-Currently, two official plugins are available:
+## 🎱 Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Dashboard**
+  - Points balance overview
+  - Recent activity tracking
+  - Quick access to rewards and club locations
+  - Personalized member statistics
 
-## React Compiler
+- **Points System**
+  - Real-time points tracking
+  - Points earning history
+  - Points redemption for rewards
+  - Weekly and monthly summaries
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+- **Rewards Store**
+  - Multiple reward categories
+  - Dynamic reward availability
+  - Points-based redemption system
+  - Reward status tracking
 
-## Expanding the ESLint configuration
+- **Leaderboard**
+  - Global rankings
+  - Club-specific rankings
+  - Real-time position updates
+  - Personalized ranking insights
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## 🚀 Getting Started
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+### Prerequisites
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- Node.js 18.x or higher
+- npm 9.x or higher
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+### Installation
+
+1. Clone the repository:
+```bash
+git clone [repository-url]
+cd billing-member-website
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Install dependencies:
+```bash
+npm install
+```
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Start the development server:
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The application will be available at http://localhost:5173 by default
+
+🛠️ Tech Stack
+```bash
+React - UI Framework
+TypeScript - Type Safety
+Vite - Build Tool
+TailwindCSS - Styling
+React Router - Routing
+Lucide Icons - Icons
+```
+
+📁 Project Structure
+```bash
+src/
+  ├── components/     # Reusable UI components
+  ├── context/       # React Context providers
+  ├── hooks/         # Custom React hooks
+  ├── pages/         # Page components
+  ├── services/      # API services
+  ├── types/         # TypeScript type definitions
+  └── data/          # Mock data (temporary)
+```
+🎨 Design System
+
+Colors
+```bash
+Primary: Blue (#261FB3)
+Success: Green (#10B981)
+Warning: Orange (#F59E0B)
+Background: White (#FFFFFF)
+Text: Navy (#0C0950)
+```
+
+Typography
+```bash
+Primary Font: System UI
+Headings: Bold weight
+Body: Regular weight
 ```
