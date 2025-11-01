@@ -159,3 +159,27 @@ export const MOCK_REWARDS: Reward[] = [
         available: true,
     },
 ];
+
+export const banners = [
+        {
+            id: 1,
+            gradient: "from-red-600 via-red-500 to-orange-500",
+            title: "🔥 October Special!",
+            subtitle: "Extra 20% Points on Weekends",
+            badge: "HOT",
+        },
+        {
+            id: 2,
+            gradient: "from-[#261FB3] via-blue-500 to-indigo-500",
+            title: "🎉 New Club Open!",
+            subtitle: "Grand Opening at Mall Surabaya",
+            badge: "NEW",
+        },
+        {
+            id: 3,
+            gradient: "from-purple-600 via-purple-500 to-pink-500",
+            title: "🏆 Tournament Alert!",
+            subtitle: "Monthly Championship - Oct 25",
+            badge: "LIVE",
+        },
+    ];

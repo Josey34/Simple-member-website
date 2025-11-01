@@ -12,6 +12,7 @@ import {
 import { useEffect, useState } from "react";
 import Card from "../components/ui/Card";
 import PointsCard from "../components/ui/PointsCard";
+import { banners } from "../data/dummyData";
 import { useAuth } from "../hooks/useAuth";
 
 const Dashboard = () => {
@@ -56,30 +57,6 @@ const Dashboard = () => {
         );
     }
 
-    const banners = [
-        {
-            id: 1,
-            gradient: "from-red-600 via-red-500 to-orange-500",
-            title: "🔥 October Special!",
-            subtitle: "Extra 20% Points on Weekends",
-            badge: "HOT",
-        },
-        {
-            id: 2,
-            gradient: "from-[#261FB3] via-blue-500 to-indigo-500",
-            title: "🎉 New Club Open!",
-            subtitle: "Grand Opening at Mall Surabaya",
-            badge: "NEW",
-        },
-        {
-            id: 3,
-            gradient: "from-purple-600 via-purple-500 to-pink-500",
-            title: "🏆 Tournament Alert!",
-            subtitle: "Monthly Championship - Oct 25",
-            badge: "LIVE",
-        },
-    ];
-
     const nextBanner = () =>
         setCurrentBanner((prev) => (prev + 1) % banners.length);
     const prevBanner = () =>
@@ -108,11 +85,11 @@ const Dashboard = () => {
 
     return (
         // Outer background
-        <div className="flex items-center justify-center min-h-screen bg-[#FBE4D6] p-4">
+        <div className="flex items-center justify-center bg-[#FBE4D6]">
             {/* Mobile Container*/}
             <div
-                className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col relative"
-                style={{ height: "90vh" }}
+                className="w-full h-screen bg-[#FBE4D6] overflow-hidden flex flex-col relative md:max-w-md md:h-[90vh] md:rounded-3xl md:shadow-2xl md:my-4"
+                style={{ height: "97vh" }}
             >
                 {/* Header */}
                 <div
@@ -120,7 +97,7 @@ const Dashboard = () => {
                         isScrolled ? "shadow-md" : "shadow-none"
                     }`}
                 >
-                    <div className="p-4 flex items-center justify-between h-24 pt-10">
+                    <div className="p-3 md:p-4 flex items-center justify-between h-16 md:h-24 pt-6 md:pt-10">
                         <div className="w-12">
                             {currentView !== "home" && (
                                 <button
@@ -150,7 +127,8 @@ const Dashboard = () => {
                 {/* Scrollable Content (App background is White) */}
                 <div
                     id="scroll-content"
-                    className="flex-1 overflow-y-auto bg-white pb-24"
+                    className="flex-1 overflow-y-auto bg-white"
+                    style={{ paddingBottom: "5rem" }}
                 >
                     {/* HOME VIEW */}
                     {currentView === "home" && (
@@ -459,7 +437,7 @@ const Dashboard = () => {
                 </div>
 
                 {/* Bottom Navigation */}
-                <div className="absolute bottom-0 left-0 right-0 bg-white backdrop-blur-lg border-t border-gray-200 shadow-2xl">
+                <div className="fixed md:absolute bottom-0 left-0 right-0 bg-white backdrop-blur-lg border-t border-gray-200 shadow-2xl">
                     <div className="flex justify-around items-center py-2 px-2 h-20">
                         <button
                             onClick={() => setCurrentView("home")}
