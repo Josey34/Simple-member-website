@@ -28,7 +28,32 @@ export interface Reward {
     title: string;
     description: string;
     pointsCost: number;
-    category: 'time' | 'food' | 'equipment' | 'tournament' | 'merchandise';
+    category: "time" | "food" | "equipment" | "tournament" | "merchandise";
     image?: string;
     available: boolean;
+}
+
+export interface LoginCredentials {
+    identifier: string;
+    pin: string;
+}
+
+export interface DeviceInfo {
+    deviceId: string;
+    platform: string;
+    userAgent: string;
+}
+
+export interface LoginPayload {
+    identifier: string;
+    pin: string;
+    identifierType: "email" | "phone";
+    deviceInfo: DeviceInfo;
+    timestamp: number;
+    formattedTime: string;
+    timezone: string;
+}
+
+export interface LoginResponse {
+    user: User;
 }
