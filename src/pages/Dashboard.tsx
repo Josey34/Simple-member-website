@@ -14,8 +14,6 @@ import Card from "../components/ui/Card";
 import PointsCard from "../components/ui/PointsCard";
 import { useAuth } from "../hooks/useAuth";
 
-// Points Card - Refactored for Peach/Blue Light Mode
-
 const Dashboard = () => {
     const { user, sessions } = useAuth();
     const [currentView, setCurrentView] = useState<
@@ -109,9 +107,9 @@ const Dashboard = () => {
     };
 
     return (
-        // Outer background is now Peach
+        // Outer background
         <div className="flex items-center justify-center min-h-screen bg-[#FBE4D6] p-4">
-            {/* Mobile Container is now White */}
+            {/* Mobile Container*/}
             <div
                 className="w-full max-w-md bg-white rounded-3xl shadow-2xl overflow-hidden flex flex-col relative"
                 style={{ height: "90vh" }}

@@ -83,7 +83,7 @@ const Login = () => {
                             <input
                                 id="identifier"
                                 name="identifier"
-                                type="text" // Changed from email to text
+                                type="text"
                                 required
                                 className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-[#0C0950] focus:outline-none focus:ring-[#261FB3] focus:border-[#261FB3]"
                                 placeholder="Enter email or phone number"
