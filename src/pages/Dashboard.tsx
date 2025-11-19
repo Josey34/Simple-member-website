@@ -21,8 +21,9 @@ const Dashboard = () => {
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
-        const handleScroll = (e: any) => {
-            setIsScrolled(e.target.scrollTop > 10);
+        const handleScroll = (e: Event) => {
+            const target = e.target as HTMLElement;
+            setIsScrolled(target.scrollTop > 10);
         };
         const scrollContainer = document.getElementById("scroll-content");
         scrollContainer?.addEventListener("scroll", handleScroll);
