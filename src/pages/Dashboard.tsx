@@ -1,4 +1,5 @@
 import {
+    Building2,
     ChevronLeft,
     ChevronRight,
     Clock,
@@ -6,6 +7,7 @@ import {
     History,
     Home,
     MapPin,
+    Store,
     TrendingUp,
     User,
 } from "lucide-react";
@@ -46,10 +48,10 @@ const Dashboard = () => {
 
     if (!user) {
         return (
-            <div className="flex items-center justify-center h-screen bg-white">
+            <div className="flex items-center justify-center h-screen bg-base-100">
                 <div className="text-center">
-                    <div className="w-16 h-16 border-4 border-[#261FB3] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-                    <p className="text-[#0C0950] text-lg">
+                    <span className="loading loading-spinner loading-lg text-primary"></span>
+                    <p className="text-base-content text-lg mt-4">
                         Loading your experience...
                     </p>
                 </div>
@@ -83,51 +85,87 @@ const Dashboard = () => {
         }
     };
 
+    // Get icon and color based on location name
+    const getLocationIcon = (locationName: string) => {
+        const lowerLocation = locationName.toLowerCase();
+
+        if (lowerLocation.includes("corner") || lowerLocation.includes("pocket")) {
+            return {
+                icon: Store,
+                gradient: "from-purple-500 to-purple-700",
+                bgColor: "bg-purple-500"
+            };
+        } else if (lowerLocation.includes("grand") || lowerLocation.includes("billiard")) {
+            return {
+                icon: Building2,
+                gradient: "from-blue-500 to-blue-700",
+                bgColor: "bg-blue-500"
+            };
+        } else if (lowerLocation.includes("break")) {
+            return {
+                icon: MapPin,
+                gradient: "from-green-500 to-green-700",
+                bgColor: "bg-green-500"
+            };
+        } else {
+            return {
+                icon: Building2,
+                gradient: "from-primary to-blue-400",
+                bgColor: "bg-primary"
+            };
+        }
+    };
+
     return (
         // Outer background
-        <div className="flex items-center justify-center bg-[#FBE4D6]">
-            {/* Mobile Container*/}
+        <div className="flex items-center justify-center bg-base-100 min-h-screen">
+            {/* Mobile Container - Responsive */}
             <div
-                className="w-full h-screen bg-[#FBE4D6] overflow-hidden flex flex-col relative md:max-w-md md:h-[90vh] md:rounded-3xl md:shadow-2xl md:my-4"
+                className="w-full h-screen bg-base-100 overflow-hidden flex flex-col relative
+                          sm:max-w-md sm:h-[95vh] sm:rounded-3xl sm:shadow-2xl sm:my-4
+                          md:max-w-lg md:h-[90vh]
+                          lg:max-w-xl"
                 style={{ height: "97vh" }}
             >
                 {/* Header */}
                 <div
-                    className={`sticky top-0 z-50 transition-all duration-300 bg-white ${
+                    className={`sticky top-0 z-50 transition-all duration-300 bg-base-100 ${
                         isScrolled ? "shadow-md" : "shadow-none"
                     }`}
                 >
-                    <div className="p-3 md:p-4 flex items-center justify-between h-16 md:h-24 pt-6 md:pt-10">
+                    <div className="p-3 md:p-4 lg:p-5 flex items-center justify-between h-16 md:h-20 lg:h-24 pt-4 md:pt-6 lg:pt-8">
                         <div className="w-12">
                             {currentView !== "home" && (
                                 <button
                                     onClick={() => setCurrentView("home")}
-                                    className="p-2 rounded-full hover:bg-gray-100"
+                                    className="btn btn-ghost btn-circle btn-sm hover:scale-110 active:scale-95 transition-transform"
                                 >
-                                    <ChevronLeft className="w-6 h-6 text-[#0C0950]" />
+                                    <ChevronLeft className="w-6 h-6" strokeWidth={2.5} />
                                 </button>
                             )}
                         </div>
-                        <h1 className="text-xl font-bold text-[#0C0950]">
+                        <h1 className="text-xl md:text-2xl font-bold text-base-content">
                             {getTitle()}
                         </h1>
                         <div className="w-12 flex justify-end">
                             <button
                                 onClick={() => setCurrentView("profile")}
-                                className="w-10 h-10 rounded-full bg-gradient-to-br from-[#261FB3] to-blue-400 flex items-center justify-center shadow-lg ring-2 ring-white"
+                                className="avatar placeholder hover:scale-110 active:scale-95 transition-transform"
                             >
-                                <span className="text-white font-bold text-lg">
-                                    {user.name.charAt(0)}
-                                </span>
+                                <div className="w-10 h-10 rounded-full bg-gradient-to-br from-primary to-blue-400 ring ring-base-100 ring-offset-base-100 ring-offset-2 hover:shadow-lg hover:shadow-primary/50">
+                                    <span className="text-white font-bold text-lg">
+                                        {user.name.charAt(0)}
+                                    </span>
+                                </div>
                             </button>
                         </div>
                     </div>
                 </div>
 
-                {/* Scrollable Content (App background is White) */}
+                {/* Scrollable Content */}
                 <div
                     id="scroll-content"
-                    className="flex-1 overflow-y-auto bg-white"
+                    className="flex-1 overflow-y-auto bg-base-100"
                     style={{ paddingBottom: "5rem" }}
                 >
                     {/* HOME VIEW */}
@@ -172,15 +210,15 @@ const Dashboard = () => {
                                 {/* Navigation Buttons */}
                                 <button
                                     onClick={prevBanner}
-                                    className="absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all hover:bg-opacity-80 hover:scale-110"
+                                    className="btn btn-circle btn-sm absolute left-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 backdrop-blur-sm border-none opacity-0 group-hover:opacity-100 transition-all hover:bg-opacity-80 hover:scale-105 active:scale-95"
                                 >
-                                    <ChevronLeft className="w-5 h-5 text-white" />
+                                    <ChevronLeft className="w-5 h-5 text-white" strokeWidth={2.5} />
                                 </button>
                                 <button
                                     onClick={nextBanner}
-                                    className="absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 backdrop-blur-sm rounded-full p-2 opacity-0 group-hover:opacity-100 transition-all hover:bg-opacity-80 hover:scale-110"
+                                    className="btn btn-circle btn-sm absolute right-2 top-1/2 -translate-y-1/2 bg-black bg-opacity-50 backdrop-blur-sm border-none opacity-0 group-hover:opacity-100 transition-all hover:bg-opacity-80 hover:scale-105 active:scale-95"
                                 >
-                                    <ChevronRight className="w-5 h-5 text-white" />
+                                    <ChevronRight className="w-5 h-5 text-white" strokeWidth={2.5} />
                                 </button>
                             </div>
 
@@ -194,8 +232,8 @@ const Dashboard = () => {
 
                             {/* Recent Activity */}
                             <div className="mx-4 mt-6">
-                                <h3 className="text-[#0C0950] font-bold text-lg mb-3 flex items-center gap-2">
-                                    <Clock className="w-5 h-5 text-[#161179] opacity-80" />
+                                <h3 className="text-base-content font-bold text-lg mb-3 flex items-center gap-2">
+                                    <Clock className="w-5 h-5 text-primary" strokeWidth={2.5} />
                                     Recent Activity
                                 </h3>
                                 <div className="space-y-3">
@@ -214,41 +252,45 @@ const Dashboard = () => {
                                 </div>
                                 <button
                                     onClick={() => setCurrentView("history")}
-                                    className="w-full mt-3 p-4 bg-gray-100 hover:bg-gray-200 rounded-xl text-center text-[#261FB3] font-semibold text-sm transition-all flex items-center justify-center gap-2"
+                                    className="btn btn-ghost w-full mt-3 gap-2 hover:scale-105 active:scale-95 transition-transform"
                                 >
                                     View All Activity
-                                    <ChevronRight className="w-4 h-4" />
+                                    <ChevronRight className="w-4 h-4" strokeWidth={2.5} />
                                 </button>
                             </div>
 
                             {/* Quick Actions */}
                             <div className="mx-4 mt-6 mb-4">
-                                <h3 className="text-[#0C0950] font-bold text-lg mb-3">
+                                <h3 className="text-base-content font-bold text-lg mb-3">
                                     Quick Actions
                                 </h3>
-                                <div className="grid grid-cols-2 gap-3">
+                                <div className="grid grid-cols-2 gap-3 sm:gap-4 md:grid-cols-2">
                                     <button
                                         onClick={() =>
                                             setCurrentView("rewards")
                                         }
-                                        className="bg-white shadow-lg border border-gray-100 rounded-xl p-5 hover:shadow-xl transform hover:scale-105 transition-all group"
+                                        className="card bg-base-100 shadow-lg border border-base-300 hover:shadow-xl hover:border-primary transform hover:scale-105 active:scale-95 transition-all group"
                                     >
-                                        <Gift className="w-10 h-10 text-[#261FB3] mb-2 group-hover:scale-110 transition-transform" />
-                                        <span className="text-sm font-bold text-[#0C0950] block">
-                                            Rewards Store
-                                        </span>
-                                        <span className="text-xs text-[#161179] opacity-80">
-                                            Redeem now
-                                        </span>
+                                        <div className="card-body p-5 items-start">
+                                            <Gift className="w-10 h-10 text-primary mb-2 group-hover:scale-110 transition-transform" strokeWidth={2} />
+                                            <span className="text-sm font-bold text-base-content block">
+                                                Rewards Store
+                                            </span>
+                                            <span className="text-xs text-base-content opacity-70">
+                                                Redeem now
+                                            </span>
+                                        </div>
                                     </button>
-                                    <button className="bg-white shadow-lg border border-gray-100 rounded-xl p-5 hover:shadow-xl transform hover:scale-105 transition-all group">
-                                        <MapPin className="w-10 h-10 text-[#261FB3] mb-2 group-hover:scale-110 transition-transform" />
-                                        <span className="text-sm font-bold text-[#0C0950] block">
-                                            Find Clubs
-                                        </span>
-                                        <span className="text-xs text-[#161179] opacity-80">
-                                            Near you
-                                        </span>
+                                    <button className="card bg-base-100 shadow-lg border border-base-300 hover:shadow-xl hover:border-primary transform hover:scale-105 active:scale-95 transition-all group">
+                                        <div className="card-body p-5 items-start">
+                                            <MapPin className="w-10 h-10 text-primary mb-2 group-hover:scale-110 group-hover:animate-pulse transition-transform" strokeWidth={2} />
+                                            <span className="text-sm font-bold text-base-content block">
+                                                Find Clubs
+                                            </span>
+                                            <span className="text-xs text-base-content opacity-70">
+                                                Near you
+                                            </span>
+                                        </div>
                                     </button>
                                 </div>
                             </div>
@@ -258,21 +300,20 @@ const Dashboard = () => {
                     {/* POINTS DETAIL VIEW */}
                     {currentView === "points" && (
                         <div className="p-4 animate-fadeIn">
-                            <div className="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 mb-6 relative overflow-hidden">
-                                <div className="absolute top-0 right-0 w-32 h-32 text-[#261FB3] opacity-10 rounded-full -mr-16 -mt-16"></div>
-                                <p className="text-[#161179] opacity-80 text-sm mb-2">
-                                    Total Points Balance
-                                </p>
-                                <p className="text-[#0C0950] text-6xl font-black mb-2">
-                                    {user.totalPoints.toLocaleString()}
-                                </p>
-                                <div className="flex items-center gap-2 text-[#161179] opacity-80 text-sm">
-                                    <TrendingUp className="w-4 h-4" />
-                                    <span>+10.8% from last month</span>
+                            <div className="stats shadow-xl w-full mb-6">
+                                <div className="stat">
+                                    <div className="stat-title">Total Points Balance</div>
+                                    <div className="stat-value text-primary">
+                                        {user.totalPoints.toLocaleString()}
+                                    </div>
+                                    <div className="stat-desc flex items-center gap-2">
+                                        <TrendingUp className="w-4 h-4 text-success" strokeWidth={2.5} />
+                                        +10.8% from last month
+                                    </div>
                                 </div>
                             </div>
 
-                            <h3 className="text-xl font-bold text-[#0C0950] mb-4">
+                            <h3 className="text-xl font-bold text-base-content mb-4">
                                 Points by Location
                             </h3>
                             <div className="space-y-4">
@@ -298,27 +339,26 @@ const Dashboard = () => {
                                 ].map((loc, idx) => (
                                     <div
                                         key={idx}
-                                        className="bg-white shadow-lg border border-gray-100 rounded-xl p-5 hover:shadow-lg transition-all"
+                                        className="card bg-base-100 shadow-lg border border-base-300 hover:shadow-xl transition-all"
                                     >
-                                        <div className="flex justify-between items-center mb-3">
-                                            <p className="font-bold text-[#0C0950] text-lg">
-                                                {loc.name}
+                                        <div className="card-body p-5">
+                                            <div className="flex justify-between items-center mb-3">
+                                                <p className="font-bold text-base-content text-lg">
+                                                    {loc.name}
+                                                </p>
+                                                <span className="badge badge-success badge-lg font-black text-lg">
+                                                    {loc.points} pts
+                                                </span>
+                                            </div>
+                                            <progress
+                                                className="progress progress-success w-full h-3"
+                                                value={loc.percent}
+                                                max="100"
+                                            ></progress>
+                                            <p className="text-base-content opacity-70 text-sm mt-2">
+                                                {loc.percent}% of total points
                                             </p>
-                                            <span className="text-green-500 font-black text-xl">
-                                                {loc.points} pts
-                                            </span>
                                         </div>
-                                        <div className="w-full bg-gray-200 rounded-full h-3 overflow-hidden">
-                                            <div
-                                                className={`bg-gradient-to-r ${loc.color} h-3 rounded-full transition-all duration-1000 shadow-lg`}
-                                                style={{
-                                                    width: `${loc.percent}%`,
-                                                }}
-                                            ></div>
-                                        </div>
-                                        <p className="text-[#161179] opacity-80 text-sm mt-2">
-                                            {loc.percent}% of total points
-                                        </p>
                                     </div>
                                 ))}
                             </div>
@@ -329,43 +369,52 @@ const Dashboard = () => {
                     {currentView === "history" && (
                         <div className="p-4">
                             <div className="space-y-3">
-                                {sessions.map((session, idx) => (
-                                    <div
-                                        key={session.id}
-                                        className="bg-white shadow-lg border border-gray-100 rounded-xl p-5 hover:shadow-xl transform hover:scale-[1.02] transition-all"
-                                        style={{
-                                            animationDelay: `${idx * 100}ms`,
-                                        }}
-                                    >
-                                        <div className="flex items-center justify-between">
-                                            <div className="flex items-center flex-1">
-                                                <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-[#261FB3] to-blue-400 flex items-center justify-center mr-4 shadow-lg">
-                                                    <History className="w-7 h-7 text-white" />
+                                {sessions.map((session, idx) => {
+                                    const locationConfig = getLocationIcon(session.location);
+                                    const LocationIcon = locationConfig.icon;
+
+                                    return (
+                                        <div
+                                            key={session.id}
+                                            className="group card bg-base-100 shadow-lg border border-base-300 hover:border-primary hover:shadow-2xl hover:shadow-primary/20 transform hover:scale-105 active:scale-95 transition-all duration-500 cursor-pointer"
+                                            style={{
+                                                animationDelay: `${idx * 100}ms`,
+                                            }}
+                                        >
+                                            <div className="card-body p-5">
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex items-center flex-1">
+                                                        <div className="avatar placeholder mr-4 group-hover:scale-110 transition-transform duration-300">
+                                                            <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${locationConfig.gradient} shadow-lg group-hover:shadow-xl group-hover:shadow-primary/50 flex items-center justify-center`}>
+                                                                <LocationIcon className="w-7 h-7 text-white" strokeWidth={2} />
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <p className="font-bold text-base-content text-lg group-hover:text-primary transition-colors">
+                                                                {session.location}
+                                                            </p>
+                                                            <p className="text-sm text-base-content opacity-70 group-hover:opacity-100 transition-opacity">
+                                                                {session.date}
+                                                            </p>
+                                                            <p className="text-xs text-base-content opacity-70 group-hover:opacity-100 flex items-center gap-1 mt-1 transition-opacity">
+                                                                <Clock className="w-3 h-3" strokeWidth={2.5} />
+                                                                {session.duration}
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                    <div className="text-right group-hover:scale-110 transition-transform duration-300">
+                                                        <div className="badge badge-success badge-lg font-black text-xl group-hover:animate-pulse group-hover:shadow-lg group-hover:shadow-success/50">
+                                                            +{session.pointsEarned}
+                                                        </div>
+                                                        <p className="text-xs text-base-content opacity-70 mt-1 font-semibold">
+                                                            points
+                                                        </p>
+                                                    </div>
                                                 </div>
-                                                <div>
-                                                    <p className="font-bold text-[#0C0950] text-lg">
-                                                        {session.location}
-                                                    </p>
-                                                    <p className="text-sm text-[#161179] opacity-80">
-                                                        {session.date}
-                                                    </p>
-                                                    <p className="text-xs text-[#161179] opacity-80 flex items-center gap-1 mt-1">
-                                                        <Clock className="w-3 h-3" />
-                                                        {session.duration}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="text-right">
-                                                <span className="font-black text-green-500 text-2xl">
-                                                    +{session.pointsEarned}
-                                                </span>
-                                                <p className="text-xs text-[#161179] opacity-80">
-                                                    points
-                                                </p>
                                             </div>
                                         </div>
-                                    </div>
-                                ))}
+                                    );
+                                })}
                             </div>
                         </div>
                     )}
@@ -373,14 +422,18 @@ const Dashboard = () => {
                     {/* REWARDS VIEW */}
                     {currentView === "rewards" && (
                         <div className="p-4">
-                            <div className="bg-gradient-to-br from-[#261FB3] to-blue-400 rounded-2xl p-8 text-center shadow-2xl">
-                                <Gift className="w-20 h-20 text-white mx-auto mb-4 animate-bounce" />
-                                <p className="text-white text-xl font-bold mb-2">
-                                    Rewards Coming Soon!
-                                </p>
-                                <p className="text-white opacity-90">
-                                    Exciting rewards are on the way
-                                </p>
+                            <div className="hero bg-gradient-to-br from-primary to-blue-400 rounded-2xl shadow-2xl min-h-64">
+                                <div className="hero-content text-center">
+                                    <div>
+                                        <Gift className="w-20 h-20 text-white mx-auto mb-4 animate-bounce" strokeWidth={2} />
+                                        <h1 className="text-2xl font-bold text-white mb-2">
+                                            Rewards Coming Soon!
+                                        </h1>
+                                        <p className="text-white opacity-90">
+                                            Exciting rewards are on the way
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     )}
@@ -388,104 +441,149 @@ const Dashboard = () => {
                     {/* PROFILE VIEW */}
                     {currentView === "profile" && (
                         <div className="p-4">
-                            <div className="bg-white shadow-xl border border-gray-100 rounded-2xl p-8 text-center mb-6">
-                                <div className="w-24 h-24 rounded-full bg-gradient-to-br from-[#261FB3] to-blue-400 flex items-center justify-center mx-auto mb-4 shadow-lg ring-4 ring-white">
-                                    <span className="text-white text-4xl font-bold">
-                                        {user.name.charAt(0)}
-                                    </span>
-                                </div>
-                                <p className="text-2xl font-bold text-[#0C0950] mb-1">
-                                    {user.name}
-                                </p>
-                                <p className="text-sm text-[#161179] opacity-80 mb-4">
-                                    {user.email}
-                                </p>
-                                <div className="inline-block bg-gradient-to-r from-yellow-400 to-orange-400 text-white text-sm font-bold px-4 py-2 rounded-full">
-                                    Gold Member
+                            <div className="card bg-base-100 shadow-xl border border-base-300 mb-6">
+                                <div className="card-body items-center text-center p-8">
+                                    <div className="avatar placeholder mb-4">
+                                        <div className="w-24 h-24 rounded-full bg-gradient-to-br from-primary to-blue-400 ring ring-base-100 ring-offset-base-100 ring-offset-4">
+                                            <span className="text-white text-4xl font-bold">
+                                                {user.name.charAt(0)}
+                                            </span>
+                                        </div>
+                                    </div>
+                                    <h2 className="card-title text-2xl text-base-content">
+                                        {user.name}
+                                    </h2>
+                                    <p className="text-sm text-base-content opacity-70 mb-4">
+                                        {user.email}
+                                    </p>
+                                    <div className="badge badge-warning badge-lg font-bold">
+                                        Gold Member
+                                    </div>
                                 </div>
                             </div>
-                            <div className="bg-white shadow-xl border border-gray-100 rounded-2xl p-5 space-y-4">
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[#161179] opacity-80">
-                                        Home Club
-                                    </span>
-                                    <span className="font-bold text-[#0C0950]">
-                                        {user.homeClub}
-                                    </span>
-                                </div>
-                                <div className="border-t border-gray-200"></div>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[#161179] opacity-80">
-                                        Total Points
-                                    </span>
-                                    <span className="font-bold text-green-500">
-                                        {user.totalPoints}
-                                    </span>
-                                </div>
-                                <div className="border-t border-gray-200"></div>
-                                <div className="flex justify-between items-center">
-                                    <span className="text-[#161179] opacity-80">
-                                        Member Since
-                                    </span>
-                                    <span className="font-bold text-[#0C0950]">
-                                        Oct 2024
-                                    </span>
+                            <div className="card bg-base-100 shadow-xl border border-base-300">
+                                <div className="card-body p-5">
+                                    <div className="flex justify-between items-center py-3">
+                                        <span className="text-base-content opacity-70">
+                                            Home Club
+                                        </span>
+                                        <span className="font-bold text-base-content">
+                                            {user.homeClub}
+                                        </span>
+                                    </div>
+                                    <div className="divider my-0"></div>
+                                    <div className="flex justify-between items-center py-3">
+                                        <span className="text-base-content opacity-70">
+                                            Total Points
+                                        </span>
+                                        <span className="badge badge-success badge-lg font-bold">
+                                            {user.totalPoints}
+                                        </span>
+                                    </div>
+                                    <div className="divider my-0"></div>
+                                    <div className="flex justify-between items-center py-3">
+                                        <span className="text-base-content opacity-70">
+                                            Member Since
+                                        </span>
+                                        <span className="font-bold text-base-content">
+                                            Oct 2024
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     )}
                 </div>
 
-                {/* Bottom Navigation */}
-                <div className="fixed md:absolute bottom-0 left-0 right-0 bg-white backdrop-blur-lg border-t border-gray-200 shadow-2xl">
-                    <div className="flex justify-around items-center py-2 px-2 h-20">
-                        <button
-                            onClick={() => setCurrentView("home")}
-                            className={`flex flex-col items-center justify-center py-2 px-4 rounded-xl transition-all w-20 ${
-                                currentView === "home"
-                                    ? "text-[#261FB3]"
-                                    : "text-gray-400 hover:text-[#261FB3]"
-                            }`}
-                        >
-                            <Home className="w-6 h-6 mb-1" />
-                            <span className="text-xs font-bold">Overview</span>
-                        </button>
+                {/* Bottom Navigation - Redesigned */}
+                <div className="fixed bottom-0 left-0 right-0 z-50 bg-base-100/95 backdrop-blur-xl border-t border-base-300 shadow-2xl sm:relative sm:rounded-b-3xl">
+                    <div className="max-w-7xl mx-auto px-2 py-2">
+                        <div className="flex items-center justify-around gap-1">
+                            {/* Home Button */}
+                            <button
+                                onClick={() => setCurrentView("home")}
+                                className={`flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-2xl transition-all duration-300 min-w-[70px] ${
+                                    currentView === "home"
+                                        ? "bg-primary text-primary-content shadow-lg scale-105"
+                                        : "hover:bg-base-200 text-base-content hover:scale-105 active:scale-95"
+                                }`}
+                            >
+                                <Home
+                                    className={`w-6 h-6 transition-all ${
+                                        currentView === "home" ? "fill-current scale-110" : ""
+                                    }`}
+                                    strokeWidth={2.5}
+                                />
+                                <span className={`text-xs font-medium ${currentView === "home" ? "font-bold" : ""}`}>
+                                    Home
+                                </span>
+                            </button>
 
-                        <button
-                            onClick={() => setCurrentView("history")}
-                            className={`flex flex-col items-center justify-center py-2 px-4 rounded-xl transition-all w-20 ${
-                                currentView === "history"
-                                    ? "text-[#261FB3]"
-                                    : "text-gray-400 hover:text-[#261FB3]"
-                            }`}
-                        >
-                            <History className="w-6 h-6 mb-1" />
-                            <span className="text-xs font-bold">History</span>
-                        </button>
+                            {/* History Button */}
+                            <button
+                                onClick={() => setCurrentView("history")}
+                                className={`flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-2xl transition-all duration-300 min-w-[70px] ${
+                                    currentView === "history"
+                                        ? "bg-primary text-primary-content shadow-lg scale-105"
+                                        : "hover:bg-base-200 text-base-content hover:scale-105 active:scale-95"
+                                }`}
+                            >
+                                <History
+                                    className={`w-6 h-6 transition-all ${
+                                        currentView === "history" ? "fill-current scale-110" : ""
+                                    }`}
+                                    strokeWidth={2.5}
+                                />
+                                <span className={`text-xs font-medium ${currentView === "history" ? "font-bold" : ""}`}>
+                                    History
+                                </span>
+                            </button>
 
-                        <button
-                            onClick={() => setCurrentView("rewards")}
-                            className={`flex flex-col items-center justify-center py-2 px-4 rounded-xl transition-all w-20 ${
-                                currentView === "rewards"
-                                    ? "text-[#261FB3]"
-                                    : "text-gray-400 hover:text-[#261FB3]"
-                            }`}
-                        >
-                            <Gift className="w-6 h-6 mb-1" />
-                            <span className="text-xs font-bold">Rewards</span>
-                        </button>
+                            {/* Rewards Button - Center with Special Design */}
+                            <button
+                                onClick={() => setCurrentView("rewards")}
+                                className={`flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-2xl transition-all duration-300 min-w-[70px] ${
+                                    currentView === "rewards"
+                                        ? "bg-gradient-to-br from-success to-green-600 text-success-content shadow-xl shadow-success/30 scale-110"
+                                        : "hover:bg-base-200 text-base-content hover:scale-105 active:scale-95"
+                                }`}
+                            >
+                                <div className={`relative ${currentView === "rewards" ? "animate-pulse" : ""}`}>
+                                    <Gift
+                                        className={`w-7 h-7 transition-all ${
+                                            currentView === "rewards" ? "fill-current" : ""
+                                        }`}
+                                        strokeWidth={2.5}
+                                    />
+                                    {currentView !== "rewards" && (
+                                        <span className="absolute -top-1 -right-1 w-2 h-2 bg-success rounded-full animate-ping"></span>
+                                    )}
+                                </div>
+                                <span className={`text-xs font-medium ${currentView === "rewards" ? "font-bold" : ""}`}>
+                                    Rewards
+                                </span>
+                            </button>
 
-                        <button
-                            onClick={() => setCurrentView("profile")}
-                            className={`flex flex-col items-center justify-center py-2 px-4 rounded-xl transition-all w-20 ${
-                                currentView === "profile"
-                                    ? "text-[#261FB3]"
-                                    : "text-gray-400 hover:text-[#2G1FB3]"
-                            }`}
-                        >
-                            <User className="w-6 h-6 mb-1" />
-                            <span className="text-xs font-bold">Account</span>
-                        </button>
+                            {/* Profile Button */}
+                            <button
+                                onClick={() => setCurrentView("profile")}
+                                className={`flex flex-col items-center justify-center gap-1 px-4 py-2 rounded-2xl transition-all duration-300 min-w-[70px] ${
+                                    currentView === "profile"
+                                        ? "bg-primary text-primary-content shadow-lg scale-105"
+                                        : "hover:bg-base-200 text-base-content hover:scale-105 active:scale-95"
+                                }`}
+                            >
+                                <User
+                                    className={`w-6 h-6 transition-all ${
+                                        currentView === "profile" ? "fill-current scale-110" : ""
+                                    }`}
+                                    strokeWidth={2.5}
+                                />
+                                <span className={`text-xs font-medium ${currentView === "profile" ? "font-bold" : ""}`}>
+                                    Account
+                                </span>
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

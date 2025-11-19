@@ -12,82 +12,77 @@ const PointsCard = ({ user, onClick }: any) => {
         >
             <button
                 onClick={onClick}
-                className={`w-full bg-white rounded-2xl p-6 shadow-lg border border-gray-100 relative overflow-hidden group transition-all duration-300 ${
-                    isHovered ? "scale-105 shadow-xl" : "scale-100"
+                className={`btn w-full h-auto bg-base-100 hover:bg-base-200 border border-base-300 rounded-2xl p-6 shadow-lg relative overflow-hidden group transition-all duration-500 hover:border-primary active:scale-95 ${
+                    isHovered ? "scale-105 shadow-2xl shadow-primary/20" : "scale-100"
                 }`}
             >
-                <div className="relative flex items-center justify-between">
+                <div className="relative flex items-center justify-between w-full">
                     <div className="text-left">
                         <div className="flex items-center gap-2 mb-2">
-                            <Award className="w-5 h-5 text-[#261FB3] animate-pulse" />
-                            <p className="text-[#161179] opacity-80 text-sm font-semibold">
+                            <Award className="w-5 h-5 text-primary animate-pulse group-hover:scale-125 transition-transform" strokeWidth={2} />
+                            <p className="text-base-content opacity-70 text-sm font-semibold group-hover:opacity-100 transition-opacity">
                                 Total Points Balance
                             </p>
                         </div>
-                        <p className="text-[#0C0950] text-5xl font-black tracking-tight mb-1">
+                        <p className="text-base-content text-5xl font-black tracking-tight mb-1 group-hover:text-primary transition-colors duration-300">
                             {user.totalPoints.toLocaleString()}
                         </p>
-                        <p className="text-[#161179] opacity-70 text-xs flex items-center gap-1">
-                            <TrendingUp className="w-3 h-3" />
+                        <p className="text-base-content opacity-60 text-xs flex items-center gap-1 group-hover:opacity-100 transition-opacity">
+                            <TrendingUp className="w-3 h-3 group-hover:animate-pulse" strokeWidth={2.5} />
                             +135 this week
                         </p>
                     </div>
-                    <div className="bg-gray-100 backdrop-blur-sm rounded-full p-3 group-hover:scale-110 transition-transform">
-                        <ChevronRight className="w-8 h-8 text-[#261FB3]" />
+                    <div className="avatar placeholder">
+                        <div className="bg-base-200 rounded-full p-3 group-hover:scale-110 group-hover:bg-primary transition-all duration-300">
+                            <ChevronRight className="w-8 h-8 text-primary group-hover:text-primary-content group-hover:translate-x-1 transition-all" strokeWidth={2} />
+                        </div>
                     </div>
                 </div>
             </button>
 
             {/* Hover Detail Panel */}
             {isHovered && (
-                <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl p-5 shadow-2xl border border-gray-200 z-30 animate-fadeIn">
-                    <div className="flex items-center justify-between mb-4">
-                        <h4 className="text-[#0C0950] font-bold text-lg">
-                            Points Overview
-                        </h4>
-                        <button
-                            onClick={onClick}
-                            className="bg-[#261FB3] hover:bg-opacity-80 text-white text-xs font-bold px-3 py-1 rounded-full transition-all"
-                        >
-                            Details →
-                        </button>
-                    </div>
+                <div className="absolute top-full left-0 right-0 mt-2 card bg-base-100 shadow-2xl border-2 border-primary z-30 animate-fadeIn">
+                    <div className="card-body p-5">
+                        <div className="flex items-center justify-between mb-4">
+                            <h4 className="card-title text-base-content text-lg">
+                                Points Overview
+                            </h4>
+                            <button
+                                onClick={onClick}
+                                className="btn btn-primary btn-xs hover:scale-110 active:scale-95 transition-transform"
+                            >
+                                Details →
+                            </button>
+                        </div>
 
-                    <div className="space-y-3">
-                        <div className="flex justify-between items-center">
-                            <span className="text-[#161179] opacity-80 text-sm">
-                                This Week
-                            </span>
-                            <span className="text-green-500 font-bold text-lg">
-                                +135 pts
-                            </span>
+                        <div className="stats stats-vertical shadow bg-base-200">
+                            <div className="stat p-3">
+                                <div className="stat-title text-xs">This Week</div>
+                                <div className="stat-value text-success text-lg">+135</div>
+                                <div className="stat-desc">pts</div>
+                            </div>
+                            <div className="stat p-3">
+                                <div className="stat-title text-xs">This Month</div>
+                                <div className="stat-value text-success text-lg">+450</div>
+                                <div className="stat-desc">pts</div>
+                            </div>
+                            <div className="stat p-3">
+                                <div className="stat-title text-xs">Available to Redeem</div>
+                                <div className="stat-value text-base-content text-lg">{user.totalPoints.toLocaleString()}</div>
+                                <div className="stat-desc">pts</div>
+                            </div>
                         </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-[#161179] opacity-80 text-sm">
-                                This Month
-                            </span>
-                            <span className="text-green-500 font-bold text-lg">
-                                +450 pts
-                            </span>
-                        </div>
-                        <div className="flex justify-between items-center">
-                            <span className="text-[#161179] opacity-80 text-sm">
-                                Available to Redeem
-                            </span>
-                            <span className="text-[#0C0950] font-bold text-lg">
-                                {user.totalPoints.toLocaleString()} pts
-                            </span>
-                        </div>
-                    </div>
 
-                    <div className="mt-4 pt-4 border-t border-gray-200">
-                        <p className="text-[#161179] opacity-80 text-xs">
-                            💡 You need{" "}
-                            <span className="text-[#0C0950] font-semibold">
-                                250 more points
-                            </span>{" "}
-                            to unlock the "2 Hours Free Play" reward
-                        </p>
+                        <div className="alert alert-info mt-4">
+                            <div className="text-xs">
+                                💡 You need{" "}
+                                <span className="font-semibold">
+                                    250 more points
+                                </span>{" "}
+                                to unlock the "2 Hours Free Play" reward
+                            </div>
+                        </div>
                     </div>
                 </div>
             )}

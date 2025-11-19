@@ -5,11 +5,13 @@ import {
   Routes,
 } from "react-router-dom";
 import { AuthProvider } from "./context/AuthContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import { useAuth } from "./hooks/useAuth";
 import Dashboard from "./pages/Dashboard";
 import Leaderboard from "./pages/Leaderboard";
 import Login from "./pages/Login";
 import Rewards from "./pages/Rewards";
+import { ThemeToggle } from "./components/ui/ThemeToggle";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
     const { isAuthenticated } = useAuth();
@@ -21,42 +23,45 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 
 function App() {
     return (
-        <AuthProvider>
-            <Router>
-                <Routes>
-                    <Route
-                        path="/"
-                        element={<Navigate to="/login" replace />}
-                    />
-                    <Route path="/login" element={<Login />} />
+        <ThemeProvider>
+            <AuthProvider>
+                <Router>
+                    <Routes>
+                        <Route
+                            path="/"
+                            element={<Navigate to="/login" replace />}
+                        />
+                        <Route path="/login" element={<Login />} />
 
-                    <Route
-                        path="/dashboard"
-                        element={
-                            <ProtectedRoute>
-                                <Dashboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/leaderboard"
-                        element={
-                            <ProtectedRoute>
-                                <Leaderboard />
-                            </ProtectedRoute>
-                        }
-                    />
-                    <Route
-                        path="/rewards"
-                        element={
-                            <ProtectedRoute>
-                                <Rewards />
-                            </ProtectedRoute>
-                        }
-                    />
-                </Routes>
-            </Router>
-        </AuthProvider>
+                        <Route
+                            path="/dashboard"
+                            element={
+                                <ProtectedRoute>
+                                    <Dashboard />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/leaderboard"
+                            element={
+                                <ProtectedRoute>
+                                    <Leaderboard />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/rewards"
+                            element={
+                                <ProtectedRoute>
+                                    <Rewards />
+                                </ProtectedRoute>
+                            }
+                        />
+                    </Routes>
+                    <ThemeToggle />
+                </Router>
+            </AuthProvider>
+        </ThemeProvider>
     );
 }
 

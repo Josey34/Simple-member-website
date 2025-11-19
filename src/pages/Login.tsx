@@ -1,6 +1,6 @@
+import { Eye, EyeOff, Lock, LogIn, Mail } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../hooks/useAuth";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -9,8 +9,8 @@ const Login = () => {
     });
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    const [showPin, setShowPin] = useState(false);
     const navigate = useNavigate();
-    const { login } = useAuth();
     
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
@@ -54,124 +54,117 @@ const Login = () => {
     };
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-[#0C0950]">
-            <div className="max-w-md w-full space-y-8 p-8 bg-[white] rounded-lg shadow-xl">
-                <div>
-                    <h2 className="mt-6 text-center text-3xl font-extrabold text-[#0C0950]">
-                        Welcome Back
-                    </h2>
-                    <p className="mt-2 text-center text-sm text-gray-600">
-                        Sign in to access your billiards club account
-                    </p>
-                </div>
+        <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-base-200 via-base-300 to-base-200 p-4">
+            <div className="w-full max-w-md">
+                {/* Login Card */}
+                <div className="bg-base-100 rounded-3xl shadow-2xl p-8 sm:p-10 backdrop-blur-xl bg-opacity-95">
+                    {/* Icon Header */}
+                    <div className="flex justify-center mb-6">
+                        <div className="w-16 h-16 rounded-2xl bg-base-200 flex items-center justify-center shadow-lg">
+                            <LogIn className="w-8 h-8 text-primary" strokeWidth={2} />
+                        </div>
+                    </div>
 
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                    {/* Title */}
+                    <div className="text-center mb-8">
+                        <h2 className="text-2xl sm:text-3xl font-bold text-base-content mb-2">
+                            Sign in with email
+                        </h2>
+                        <p className="text-sm text-base-content/60">
+                            Make a new doc to bring your words, data,<br />and teams together. For free
+                        </p>
+                    </div>
+
+                    {/* Error Alert */}
                     {error && (
-                        <div className="bg-red-50 border-l-4 border-red-400 p-4">
-                            <div className="text-red-700 text-sm">{error}</div>
+                        <div className="alert alert-error mb-6 rounded-xl">
+                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                            <span className="text-sm">{error}</span>
                         </div>
                     )}
 
-                    <div className="rounded-md shadow-sm space-y-4">
-                        <div>
-                            <label
-                                htmlFor="identifier"
-                                className="block text-sm font-medium text-[#0C0950]"
-                            >
-                                Email or Phone Number
-                            </label>
-                            <input
-                                id="identifier"
-                                name="identifier"
-                                type="text"
-                                required
-                                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-[#0C0950] focus:outline-none focus:ring-[#261FB3] focus:border-[#261FB3]"
-                                placeholder="Enter email or phone number"
-                                value={credentials.identifier}
-                                onChange={handleChange}
-                                disabled={isLoading}
-                            />
-                            <p className="mt-1 text-xs text-gray-500">
-                                Example: user@email.com or 081234567890
-                            </p>
+                    {/* Form */}
+                    <form className="space-y-5" onSubmit={handleSubmit}>
+                        {/* Email/Phone Input */}
+                        <div className="form-control">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none z-10">
+                                    <Mail className="w-5 h-5 text-base-content/60" strokeWidth={2} />
+                                </div>
+                                <input
+                                    id="identifier"
+                                    name="identifier"
+                                    type="text"
+                                    required
+                                    className="input input-bordered w-full pl-12 h-12 rounded-xl bg-base-200 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none transition-all duration-200"
+                                    placeholder="Email"
+                                    value={credentials.identifier}
+                                    onChange={handleChange}
+                                    disabled={isLoading}
+                                />
+                            </div>
                         </div>
 
-                        <div>
-                            <label
-                                htmlFor="pin"
-                                className="block text-sm font-medium text-[#0C0950]"
-                            >
-                                PIN (6 digits)
-                            </label>
-                            <input
-                                id="pin"
-                                name="pin"
-                                type="password"
-                                inputMode="numeric"
-                                pattern="\d{6}"
-                                maxLength={6}
-                                required
-                                className="mt-1 appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-[#0C0950] focus:outline-none focus:ring-[#261FB3] focus:border-[#261FB3] tracking-[0.5em] text-center text-xl"
-                                placeholder="••••••"
-                                value={credentials.pin}
-                                onChange={handleChange}
-                                disabled={isLoading}
-                                autoComplete="new-password"
-                            />
-                            <p className="mt-1 text-xs text-gray-500">
-                                Enter your 6-digit PIN number
-                            </p>
-                        </div>
-                    </div>
-
-                    <div className="flex items-center justify-between">
-                        <div className="flex items-center">
-                            <input
-                                id="remember-me"
-                                name="remember-me"
-                                type="checkbox"
-                                className="h-4 w-4 text-[#261FB3] focus:ring-[#261FB3] border-gray-300 rounded"
-                            />
-                            <label
-                                htmlFor="remember-me"
-                                className="ml-2 block text-sm text-[#0C0950]"
-                            >
-                                Remember me
-                            </label>
+                        {/* PIN Input */}
+                        <div className="form-control">
+                            <div className="relative">
+                                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none z-10">
+                                    <Lock className="w-5 h-5 text-base-content/60" strokeWidth={2} />
+                                </div>
+                                <input
+                                    id="pin"
+                                    name="pin"
+                                    type={showPin ? "text" : "password"}
+                                    inputMode="numeric"
+                                    pattern="\d{6}"
+                                    maxLength={6}
+                                    required
+                                    className="input input-bordered w-full pl-12 pr-12 h-12 rounded-xl bg-base-200 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none transition-all duration-200"
+                                    placeholder="PIN"
+                                    value={credentials.pin}
+                                    onChange={handleChange}
+                                    disabled={isLoading}
+                                    autoComplete="new-password"
+                                />
+                                <button
+                                    type="button"
+                                    onClick={() => setShowPin(!showPin)}
+                                    className="absolute inset-y-0 right-0 flex items-center pr-4 hover:opacity-70 transition-opacity z-10"
+                                    disabled={isLoading}
+                                >
+                                    {showPin ? (
+                                        <EyeOff className="w-5 h-5 text-base-content/60" strokeWidth={2} />
+                                    ) : (
+                                        <Eye className="w-5 h-5 text-base-content/60" strokeWidth={2} />
+                                    )}
+                                </button>
+                            </div>
                         </div>
 
-                    <div className="text-sm">
-                        <a
-                            href="#"
-                            className="font-medium text-[#261FB3] hover:text-[#261FB3]/80"
+                        {/* Forgot PIN Link */}
+                        <div className="text-right">
+                            <a href="#" className="text-sm text-primary hover:underline">
+                                Forgot PIN?
+                            </a>
+                        </div>
+
+                        {/* Submit Button */}
+                        <button
+                            type="submit"
+                            disabled={isLoading}
+                            className="btn btn-neutral w-full h-12 rounded-xl text-base font-medium hover:scale-[1.02] active:scale-[0.98] transition-transform"
                         >
-                            Forgot your PIN?
-                        </a>
-                    </div>
-                    </div>
-
-                    <button
-                        type="submit"
-                        disabled={isLoading}
-                        className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
-                            isLoading
-                                ? "bg-[#261FB3]/50 cursor-not-allowed"
-                                : "bg-[#261FB3] hover:bg-[#261FB3]/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#261FB3]"
-                        }`}
-                    >
-                        {isLoading ? (
-                            <span className="flex items-center">
-                                <svg className="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                                </svg>
-                                Signing in...
-                            </span>
-                        ) : (
-                            "Sign in"
-                        )}
-                    </button>
-                </form>
+                            {isLoading ? (
+                                <>
+                                    <span className="loading loading-spinner loading-sm"></span>
+                                    Signing in...
+                                </>
+                            ) : (
+                                "Get Started"
+                            )}
+                        </button>
+                    </form>
+                </div>
             </div>
         </div>
     );
