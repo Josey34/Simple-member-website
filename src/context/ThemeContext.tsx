@@ -1,7 +1,7 @@
-import { createContext, useEffect, useState } from "react";
 import type { ReactNode } from "react";
+import { createContext, useEffect, useState } from "react";
 
-type Theme = "light" | "dark";
+type Theme = "light" | "forest";
 
 interface ThemeContextType {
     theme: Theme;
@@ -19,8 +19,12 @@ interface ThemeProviderProps {
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const [theme, setTheme] = useState<Theme>(() => {
         // Get theme from localStorage or default to light
-        const savedTheme = localStorage.getItem("theme") as Theme;
-        return savedTheme || "light";
+        const savedTheme = localStorage.getItem("theme");
+        // Migrate from old "dark" theme to "forest"
+        if (savedTheme === "dark") {
+            return "forest";
+        }
+        return (savedTheme as Theme) || "light";
     });
 
     useEffect(() => {
@@ -31,7 +35,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     }, [theme]);
 
     const toggleTheme = () => {
-        setTheme((prevTheme) => (prevTheme === "light" ? "dark" : "light"));
+        setTheme((prevTheme) => (prevTheme === "light" ? "forest" : "light"));
     };
 
     return (
