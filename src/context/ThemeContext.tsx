@@ -18,9 +18,7 @@ interface ThemeProviderProps {
 
 export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     const [theme, setTheme] = useState<Theme>(() => {
-        // Get theme from localStorage or default to light
         const savedTheme = localStorage.getItem("theme");
-        // Migrate from old "dark" theme to "forest"
         if (savedTheme === "dark") {
             return "forest";
         }
@@ -28,9 +26,7 @@ export const ThemeProvider = ({ children }: ThemeProviderProps) => {
     });
 
     useEffect(() => {
-        // Apply theme to document
         document.documentElement.setAttribute("data-theme", theme);
-        // Save to localStorage
         localStorage.setItem("theme", theme);
     }, [theme]);
 
