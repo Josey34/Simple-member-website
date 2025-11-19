@@ -1,6 +1,8 @@
 import { Eye, EyeOff, Lock, LogIn, Mail } from "lucide-react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Input from "../components/ui/Input";
+import Alert from "../components/ui/Alert";
 
 const Login = () => {
     const [credentials, setCredentials] = useState({
@@ -77,59 +79,46 @@ const Login = () => {
 
                     {/* Error Alert */}
                     {error && (
-                        <div className="alert alert-error mb-6 rounded-xl">
-                            <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current shrink-0 h-5 w-5" fill="none" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                            <span className="text-sm">{error}</span>
-                        </div>
+                        <Alert type="error" className="mb-6">
+                            {error}
+                        </Alert>
                     )}
 
                     {/* Form */}
                     <form className="space-y-5" onSubmit={handleSubmit}>
                         {/* Email/Phone Input */}
-                        <div className="form-control">
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none z-10">
-                                    <Mail className="w-5 h-5 text-base-content/60" strokeWidth={2} />
-                                </div>
-                                <input
-                                    id="identifier"
-                                    name="identifier"
-                                    type="text"
-                                    required
-                                    className="input input-bordered w-full pl-12 h-12 rounded-xl bg-base-200 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none transition-all duration-200"
-                                    placeholder="Email"
-                                    value={credentials.identifier}
-                                    onChange={handleChange}
-                                    disabled={isLoading}
-                                />
-                            </div>
-                        </div>
+                        <Input
+                            icon={Mail}
+                            id="identifier"
+                            name="identifier"
+                            type="text"
+                            required
+                            placeholder="Email"
+                            value={credentials.identifier}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                        />
 
                         {/* PIN Input */}
-                        <div className="form-control">
-                            <div className="relative">
-                                <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none z-10">
-                                    <Lock className="w-5 h-5 text-base-content/60" strokeWidth={2} />
-                                </div>
-                                <input
-                                    id="pin"
-                                    name="pin"
-                                    type={showPin ? "text" : "password"}
-                                    inputMode="numeric"
-                                    pattern="\d{6}"
-                                    maxLength={6}
-                                    required
-                                    className="input input-bordered w-full pl-12 pr-12 h-12 rounded-xl bg-base-200 border-base-300 focus:bg-base-100 focus:border-primary focus:outline-none transition-all duration-200"
-                                    placeholder="PIN"
-                                    value={credentials.pin}
-                                    onChange={handleChange}
-                                    disabled={isLoading}
-                                    autoComplete="new-password"
-                                />
+                        <Input
+                            icon={Lock}
+                            id="pin"
+                            name="pin"
+                            type={showPin ? "text" : "password"}
+                            inputMode="numeric"
+                            pattern="\d{6}"
+                            maxLength={6}
+                            required
+                            placeholder="PIN"
+                            value={credentials.pin}
+                            onChange={handleChange}
+                            disabled={isLoading}
+                            autoComplete="new-password"
+                            rightElement={
                                 <button
                                     type="button"
                                     onClick={() => setShowPin(!showPin)}
-                                    className="absolute inset-y-0 right-0 flex items-center pr-4 hover:opacity-70 transition-opacity z-10"
+                                    className="hover:opacity-70 transition-opacity"
                                     disabled={isLoading}
                                 >
                                     {showPin ? (
@@ -138,8 +127,8 @@ const Login = () => {
                                         <Eye className="w-5 h-5 text-base-content/60" strokeWidth={2} />
                                     )}
                                 </button>
-                            </div>
-                        </div>
+                            }
+                        />
 
                         {/* Forgot PIN Link */}
                         <div className="text-right">
